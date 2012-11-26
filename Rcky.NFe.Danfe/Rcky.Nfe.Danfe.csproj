@@ -37,12 +37,15 @@
   <ItemGroup>
     <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
       <Private>True</Private>
+      <HintPath>..\Rcky.Nfe.NotaFiscal\refs\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
       <Private>True</Private>
+      <HintPath>..\Rcky.Nfe.NotaFiscal\refs\CrystalDecisions.ReportSource.dll</HintPath>
     </Reference>
     <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
       <Private>True</Private>
+      <HintPath>..\Rcky.Nfe.NotaFiscal\refs\CrystalDecisions.Shared.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
@@ -57,7 +60,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Zen.Barcode.Core">
-      <HintPath>S:\Desenvolvimento\Componentes\DLLs\Zen.Barcode\Zen.Barcode.Core.dll</HintPath>
+      <HintPath>..\Rcky.Nfe.NotaFiscal\refs\Zen.Barcode.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

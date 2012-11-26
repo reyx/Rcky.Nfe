@@ -697,6 +697,7 @@ namespace Rcky.Nfe.NotaFiscal
 
                         break;
                     case "40":
+                    case "41":
                         det.imposto.ICMS.ICMS40 = new Reyx.Nfe.Schema200.Members.ICMS40()
                         {
                             orig = orig,
@@ -707,26 +708,18 @@ namespace Rcky.Nfe.NotaFiscal
                         if (!string.IsNullOrEmpty(motDesICMS)) det.imposto.ICMS.ICMS40.motDesICMS = motDesICMS;
 
                         break;
-                    case "41":
-                        det.imposto.ICMS.ICMS40 = new Reyx.Nfe.Schema200.Members.ICMS40()
-                        {
-                            orig = orig,
-                            CST = CST,
-                            motDesICMS = motDesICMS,
-                            vICMS = vICMS
-                        };
-                        if (!string.IsNullOrEmpty(motDesICMS)) det.imposto.ICMS.ICMS40.motDesICMS = motDesICMS;
-                        break;
                     case "ST":
                         det.imposto.ICMS.ICMSST = new Reyx.Nfe.Schema200.Members.ICMSST()
                         {
                             orig = orig,
                             CST = "41",
-                            //vBCSTDest = vBCSTDest,
                             vBCSTRet = vBCSTRet,
-                            //vICMSSTDest = vICMSSTDest,
                             vICMSSTRet = vICMSSTRet
                         };
+
+                        // if (!string.IsNullOrEmpty(vBCSTDest)) det.imposto.ICMS.ICMSST.vBCSTDest = vBCSTDest;
+                        // if (!string.IsNullOrEmpty(vICMSSTDest)) det.imposto.ICMS.ICMSST.vICMSSTDest = vICMSSTDest;
+
                         break;
                     case "50":
                         det.imposto.ICMS.ICMS40 = new Reyx.Nfe.Schema200.Members.ICMS40()
