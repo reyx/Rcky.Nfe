@@ -42,6 +42,7 @@ namespace Rcky.Nfe.NotaFiscal
         private const string schemaConsulta = "2.01";
         private const string schemaRecibo = "2.00";
         private const string schemaCancelamento = "2.00";
+        private const string schemaCancelamentoEvento = "2.00";
         private const string schemaInutilização = "2.00";
         private const string schemaCorrecao = "2.00";
         private const string schemaNFe = "2.00";
@@ -1452,6 +1453,7 @@ namespace Rcky.Nfe.NotaFiscal
             return "1";
         }
 
+
         /// <summary>
         /// 
         /// </summary>
@@ -1552,6 +1554,110 @@ namespace Rcky.Nfe.NotaFiscal
 
             return "1";
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="arquivo"></param>
+        /// <param name="idLote"></param>
+        /// <param name="xJust"></param>
+        /// <param name="dhEvento"></param>
+        /// <returns></returns>
+        public string CancelarEvento(string arquivo, string idLote, string xJust, string dhEvento)
+        {
+            try
+            {
+                this.erros = new List<string>();
+                this.mensagens = new List<string>();
+
+                if (certificado == null) erros.Add("Certificado não localizado.");
+
+                this.procNFe = Reyx.Nfe.XmlParser.Xml.Load<Reyx.Nfe.Schema200.procNFe>(arquivo);
+                if (this.procNFe == null) erros.Add("Arquivo informado inválido.");
+
+                if (SemErros())
+                {
+                    ObterWebService("RecepcaoEvento", this.procNFe.NFe.infNFe.emit.enderEmit.UF, this.procNFe.NFe.infNFe.ide.tpAmb);
+
+                    if (SemErros())
+                    {
+                        using (RecepcaoEvento ws = new RecepcaoEvento(webService))
+                        {
+                            ws.nfeCabecMsgValue = new Reyx.Nfe.Web.RecepcaoEvento.nfeCabecMsg()
+                            {
+                                cUF = this.procNFe.NFe.infNFe.ide.cUF,
+                                versaoDados = schemaCancelamentoEvento
+                            };
+                            ws.SoapVersion = SoapProtocolVersion.Soap12;
+
+                            ws.ClientCertificates.Add(certificado);
+                            Reyx.Nfe.Schema200.Envio.Cancelamento.envEvento evtCancNFe = new Reyx.Nfe.Schema200.Envio.Cancelamento.envEvento()
+                            {
+                                versao = schemaCancelamentoEvento,
+                                idLote = idLote,
+                                evento = new List<Reyx.Nfe.Schema200.Envio.Cancelamento.evento>()
+                            };
+
+                            evtCancNFe.evento.Add(new Reyx.Nfe.Schema200.Envio.Cancelamento.evento()
+                            {
+                                versao = schemaCancelamentoEvento,
+                                infEvento = new Reyx.Nfe.Schema200.Envio.Cancelamento.infEvento()
+                                {
+                                    chNFe = procNFe.protNFe.infProt.chNFe,
+                                    CNPJ = procNFe.NFe.infNFe.emit.CNPJ,
+                                    CPF = procNFe.NFe.infNFe.emit.CPF,
+                                    cOrgao = procNFe.NFe.infNFe.ide.cUF,
+                                    dhEvento = DateTime.Now.ToString("yyyy-MM-ddThh:mm:sszzz"),
+                                    Id = "ID110111" + procNFe.protNFe.infProt.chNFe + "1",
+                                    nSeqEvento = "1",
+                                    tpAmb = procNFe.protNFe.infProt.tpAmb,
+                                    tpEvento = "110111",
+                                    verEvento = schemaCancelamentoEvento,
+                                    detEvento = new Reyx.Nfe.Schema200.Envio.detEvento() {
+                                        versao = schemaCancelamentoEvento,
+                                        descEvento = "Cancelamento",
+                                        nProt = procNFe.protNFe.infProt.nProt,
+                                        xJust = xJust
+                                    }                                    
+                                }
+                            });
+
+                            XmlDocument xml = Assinar("infEvento", evtCancNFe.ToXmlString(), certificado);
+                            xml.Save(GetFile(procNFe.protNFe.infProt.chNFe + "-ped-correcao.xml"));
+
+                            XmlNode n = ws.nfeRecepcaoEvento(xml);
+                            if (n == null)
+                            {
+                                throw new Exception("Falha na obtenção do arquivo de retorno.");
+                            }
+                            else
+                            {
+                                Reyx.Nfe.Schema200.Retorno.retEnvEvento retEnvEvento = n.OuterXml.ToXmlClass<Reyx.Nfe.Schema200.Retorno.retEnvEvento>();
+
+                                retEnvEvento.Save(GetFile(procNFe.protNFe.infProt.chNFe + "-canc-evento.xml"));
+
+                                if (retEnvEvento.cStat == "135")
+                                {
+                                    mensagens.Add(retEnvEvento.cStat + "," + retEnvEvento.xMotivo);
+                                    return "0";
+                                }
+                                else
+                                {
+                                    erros.Add(retEnvEvento.cStat + "," + retEnvEvento.xMotivo);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                erros.Add("--- Erro ao cancelar a nota por evento --");
+                AddException(ex);
+            }
+
+            return "1";
+        }
         
         /// <summary>
         /// 
@@ -1590,17 +1696,17 @@ namespace Rcky.Nfe.NotaFiscal
                             ws.SoapVersion = SoapProtocolVersion.Soap12;
 
                             ws.ClientCertificates.Add(certificado);
-                            Reyx.Nfe.Schema200.Envio.envCCe envCCe = new Reyx.Nfe.Schema200.Envio.envCCe()
+                            Reyx.Nfe.Schema200.Envio.CartaCorrecao.envCCe envCCe = new Reyx.Nfe.Schema200.Envio.CartaCorrecao.envCCe()
                             {
                                 versao = schemaCorrecao,
                                 idLote = idLote,
-                                evento = new List<Reyx.Nfe.Schema200.evento>()
+                                evento = new List<Reyx.Nfe.Schema200.Envio.CartaCorrecao.evento>()
                             };
 
-                            envCCe.evento.Add(new Reyx.Nfe.Schema200.evento()
+                            envCCe.evento.Add(new Reyx.Nfe.Schema200.Envio.CartaCorrecao.evento()
                             {
                                 versao = schemaCorrecao,
-                                infEvento = new Reyx.Nfe.Schema200.Envio.infEvento()
+                                infEvento = new Reyx.Nfe.Schema200.Envio.CartaCorrecao.infEvento()
                                 {
                                     chNFe = procNFe.protNFe.infProt.chNFe,
                                     CNPJ = procNFe.NFe.infNFe.emit.CNPJ,

@@ -12,10 +12,14 @@
     <AssemblyName>Rcky.Nfe.NotaFiscal</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,11 +41,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Rcky.Nfe.Criptografia">
-      <HintPath>..\Rcky.Nfe.Criptografia\obj\Release\Rcky.Nfe.Criptografia.dll</HintPath>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\ZenDeskApi.1.0.1.4\lib\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Reyx.Nfe, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Reyx.Nfe">
       <HintPath>..\..\Reyx.Nfe\Reyx.Nfe\bin\Debug\Reyx.Nfe.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -68,6 +71,10 @@
       <Project>{2E67F429-2E4D-4A3D-9F70-4A00463A9104}</Project>
       <Name>Rcky.Nfe.Certificados</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Rcky.Nfe.Criptografia\Rcky.Nfe.Criptografia.csproj">
+      <Project>{337C0527-28E7-4F94-B07B-CAAC6627C2B2}</Project>
+      <Name>Rcky.Nfe.Criptografia</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Rcky.Nfe.Danfe\Rcky.Nfe.Danfe.csproj">
       <Project>{4F0C9100-6C2E-4B67-B6D1-66DE145307FE}</Project>
       <Name>Rcky.Nfe.Danfe</Name>
@@ -79,6 +86,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

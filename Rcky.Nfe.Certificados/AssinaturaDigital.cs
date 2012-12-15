@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace Rcky.Nfe.Certificados
 {
-    public class AssinaturaDigital
+    public class                    AssinaturaDigital
     {
         private XmlDocument XMLDoc = new XmlDocument { PreserveWhitespace = false };
         

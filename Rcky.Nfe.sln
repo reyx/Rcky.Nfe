@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Web
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rcky.Nfe.NotaFiscal", "Rcky.Nfe.NotaFiscal\Rcky.Nfe.NotaFiscal.csproj", "{F4B2BEFF-C4E4-471E-A95E-2B6B9FB7D5F3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rcky.Nfe.WebServices", "Rcky.Nfe.WebServices\Rcky.Nfe.WebServices.csproj", "{7B0BBC84-EDD3-4DED-8A41-E2965595D447}"

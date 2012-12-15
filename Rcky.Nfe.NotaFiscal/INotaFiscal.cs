@@ -285,6 +285,16 @@ namespace Rcky.Nfe.NotaFiscal
         string Cancelar(string arquivo, string xJust);
 
         /// <summary>
+        /// Cancelar documento fiscal por evento através de webservice
+        /// </summary>
+        /// <param name="arquivo"></param>
+        /// <param name="idLote"></param>
+        /// <param name="xJust"></param>
+        /// <param name="dhEvento"></param>
+        /// <returns></returns>
+        string CancelarEvento(string arquivo, string idLote, string xJust, string dhEvento);
+
+        /// <summary>
         /// Inutilizar documento fiscal através de webservice 
         /// </summary>
         /// <param name="pasta">Caminho completo do local onde está o documento</param>
