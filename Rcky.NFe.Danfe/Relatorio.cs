@@ -291,6 +291,12 @@ namespace Rcky.Nfe.Danfe
                 if (ds.Tables["veicTransp"].Columns["RNTC"] == null) { ds.Tables["veicTransp"].Columns.Add("RNTC"); }
 
                 if (ds.Tables["vol"] == null) { ds.Tables.Add("vol"); }
+                if (ds.Tables["vol"].Columns["qVol"] == null) { ds.Tables["vol"].Columns.Add("qVol"); }
+                if (ds.Tables["vol"].Columns["esp"] == null) { ds.Tables["vol"].Columns.Add("esp"); }
+                if (ds.Tables["vol"].Columns["marca"] == null) { ds.Tables["vol"].Columns.Add("marca"); }
+                if (ds.Tables["vol"].Columns["nVol"] == null) { ds.Tables["vol"].Columns.Add("nVol"); }
+                if (ds.Tables["vol"].Columns["pesoL"] == null) { ds.Tables["vol"].Columns.Add("pesoL"); }
+                if (ds.Tables["vol"].Columns["pesoB"] == null) { ds.Tables["vol"].Columns.Add("pesoB"); }
 
                 if (ds.Tables["cobr"] == null) { ds.Tables.Add("cobr"); }
                 if (ds.Tables["fat"] == null) { ds.Tables.Add("fat"); }
